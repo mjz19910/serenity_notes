@@ -1,0 +1,36 @@
+serenity_base_args=(
+    -s
+    -m 1G
+    -smp 2
+    -display sdl,gl=off
+    -device VGA,vgamem_mb=64
+    -drive 'file=\\wsl$\Ubuntu\root\serenity\Build\i686\_disk_image,format=raw,index=0,media=disk'
+    -device virtio-serial,max_ports=2
+    -device virtconsole,chardev=stdout
+    -device isa-debugcon,chardev=stdout
+    -device virtio-rng-pci
+    -audiodev dsound,id=snd0
+    -machine pcspk-audiodev=snd0
+    -device sb16,audiodev=snd0
+    -device pci-bridge,chassis_nr=1,id=bridge1
+    -device e1000,bus=bridge1
+    -device i82801b11-bridge,bus=bridge1,id=bridge2
+    -device sdhci-pci,bus=bridge2
+    -device i82801b11-bridge,id=bridge3
+    -device sdhci-pci,bus=bridge3
+    -device ich9-ahci,bus=bridge3
+    -chardev stdio,id=stdout,mux=on
+    -cpu max,vmx=off,-x2apic
+    -d guest_errors
+    -usb
+    -chardev qemu-vdagent,clipboard=on,mouse=off,id=vdagent,name=vdagent
+    -spice port=5930,agent-mouse=on,disable-ticketing=on
+    -device virtserialport,chardev=vdagent,nr=1
+    -accel whpx,kernel-irqchip=off
+    -accel tcg
+    -netdev user,id=breh,hostfwd=tcp:127.0.0.1:8888-10.0.2.15:8888,hostfwd=tcp:127.0.0.1:8823-10.0.2.15:23,hostfwd=tcp:127.0.0.1:8000-10.0.2.15:8000,hostfwd=tcp:127.0.0.1:2222-10.0.2.15:22
+    -device e1000,netdev=breh
+    -kernel Kernel/Prekernel/Prekernel
+    -initrd Kernel/Kernel
+)
+"/mnt/c/Program Files/qemu/qemu-system-i386.exe" "${(@)serenity_base_args}" "$@"
