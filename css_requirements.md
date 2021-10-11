@@ -13,3 +13,7 @@ body {
 	animation:0;
 }
 ```
+```cpp
+handle invalid cases
+JS::Bytecode::Op::Call
+```
