@@ -14,6 +14,9 @@ body {
 }
 ```
 ```cpp
-handle invalid cases
+//handle invalid cases
 JS::Bytecode::Op::Call
+```
+```js
+element.setAttribute("on"+'listener','code') && element.attributes["on"+'listener']
 ```
